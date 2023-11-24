@@ -1,0 +1,1 @@
+exec typeorm-ts-node-commonjs -d src/data-source.ts -p true migration:generate src/migrations/$1

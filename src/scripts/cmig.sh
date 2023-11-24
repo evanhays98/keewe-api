@@ -1,0 +1,1 @@
+exec typeorm-ts-node-commonjs migration:create src/migrations/$1

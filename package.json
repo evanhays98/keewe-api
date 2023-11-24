@@ -19,7 +19,8 @@
     "gmig": "./src/scripts/gmig.sh",
     "cmig": "./src/scripts/cmig.sh",
     "mig": "typeorm-ts-node-commonjs -d src/data-source.ts migration:run",
-    "rmig": "typeorm-ts-node-commonjs -d src/data-source.ts migration:revert"
+    "rmig": "typeorm-ts-node-commonjs -d src/data-source.ts migration:revert",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -75,10 +76,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run test"
-    }
   }
 }

@@ -117,7 +117,7 @@ export class BalanceService {
         balance.currency.code === currencyCode
           ? 1
           : currency.rates[balance.currency.code];
-      return acc + balance.amount * rate;
+      return acc + (balance?.amount || 0) * rate;
     }, 0);
   }
 }

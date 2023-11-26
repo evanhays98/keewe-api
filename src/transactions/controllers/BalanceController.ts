@@ -33,9 +33,6 @@ export class BalanceController {
       throw new BadRequestException('Invalid currency code');
     }
     const user = req.user as AuthUser;
-    this.logger.log(
-      `Create balance for user ${user.id} with amount ${amount} and currency ${currencyCode}`,
-    );
     return this.balanceService.create(user.id, currencyCode, amount);
   }
 
@@ -69,6 +66,6 @@ export class BalanceController {
       throw new BadRequestException('Invalid currency code');
     }
     const user = req.user as AuthUser;
-    return this.balanceService.getTotalAmount(user.id, currencyCode);
+    return await this.balanceService.getTotalAmount(user.id, currencyCode);
   }
 }

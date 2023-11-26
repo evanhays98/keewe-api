@@ -19,7 +19,15 @@ export class BalanceEntity extends BaseEntity {
   @IsUUID('4', { always: true })
   currencyId: string;
 
-  @Column({ type: 'decimal', nullable: false, default: 0 })
+  @Column({
+    type: 'decimal',
+    nullable: false,
+    default: 0,
+    transformer: {
+      to: (value: number) => value,
+      from: (value: string) => parseFloat(value),
+    },
+  })
   @IsNumber()
   amount: number;
 }

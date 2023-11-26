@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import isEmail from 'validator/lib/isEmail';
 import { UserEntity } from '../entities/UserEntity';
 import { RegisterUserDto } from '../dtos';
@@ -53,6 +53,14 @@ export class UsersService {
         },
       })
     );
+  }
+
+  async findAllExceptMe(userId: string): Promise<UserEntity[]> {
+    return this.repo.find({
+      where: {
+        id: Not(userId),
+      },
+    });
   }
 
   async findOne(id: string): Promise<UserEntity> {

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PaymentEntity } from '../entities';
 import { BalanceService } from './BalanceService';
+import { Status } from '../../libs/enums';
 
 @Injectable()
 export class PaymentService {
@@ -38,6 +39,7 @@ export class PaymentService {
     payment.recipientId = recipientId;
     payment.currencyId = currencyId;
     payment.amount = amount;
+    payment.status = Status.SUCCESS;
     return this.repo.save(payment);
   }
 

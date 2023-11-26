@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Logger,
+  Param,
   Req,
   UseGuards,
   UseInterceptors,
@@ -18,11 +19,26 @@ export class UserController {
 
   constructor(private readonly userService: UsersService) {}
 
+  @Get('')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  async findAll(@Req() req: Request) {
+    const user: AuthUser = req.user as AuthUser;
+    return this.userService.findAllExceptMe(user.id);
+  }
+
   @Get('me')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async me(@Req() req: Request) {
     const user: AuthUser = req.user as AuthUser;
     return this.userService.findOne(user.id);
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  async findOne(@Param('id') id: string) {
+    return this.userService.findOne(id);
   }
 }

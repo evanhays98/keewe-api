@@ -1,6 +1,7 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../../libs/entities/BaseEntity';
-import { IsNumber, IsUUID } from 'class-validator';
+import { IsEnum, IsNumber, IsUUID } from 'class-validator';
+import { Status } from '../../libs/enums';
 
 @Entity()
 export class CurrencyConversionEntity extends BaseEntity {
@@ -20,7 +21,18 @@ export class CurrencyConversionEntity extends BaseEntity {
   @IsNumber()
   amount: number;
 
-  @Column({ type: 'decimal', nullable: false })
+  @Column({
+    type: 'decimal',
+    nullable: false,
+    transformer: {
+      to: (value: number) => value,
+      from: (value: string) => parseFloat(value),
+    },
+  })
   @IsNumber()
   rate: number;
+
+  @Column({ type: 'enum', enum: Status })
+  @IsEnum({ always: true, enum: Status })
+  status: Status;
 }

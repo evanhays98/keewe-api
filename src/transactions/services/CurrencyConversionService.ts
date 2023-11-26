@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CurrencyConversionEntity } from '../entities/CurrencyConversionEntity';
 import { BalanceService } from './BalanceService';
+import { Status } from '../../libs/enums';
 
 @Injectable()
 export class CurrencyConversionService {
@@ -34,7 +35,6 @@ export class CurrencyConversionService {
       userId,
       toCurrencyId,
     );
-    this.logger.log(JSON.stringify(toBalance));
     const rate = fromBalance.currency.rates[toBalance.currency.code];
     await this.balanceService.remove(userId, fromBalance.currency.code, amount);
     await this.balanceService.create(
@@ -48,6 +48,7 @@ export class CurrencyConversionService {
     conversion.toCurrencyId = toCurrencyId;
     conversion.amount = amount;
     conversion.rate = rate;
+    conversion.status = Status.SUCCESS;
     return this.repo.save(conversion);
   }
 
